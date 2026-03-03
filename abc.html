@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Forever ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffe3ec, #fff5f8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.box {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 450px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    position: relative;
+    animation: fadeIn 0.8s ease;
+}
+
+h1, h2 {
+    color: #d6336c;
+}
+
+p {
+    color: #444;
+    line-height: 1.6;
+}
+
+button {
+    padding: 12px 24px;
+    border-radius: 30px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.primary {
+    background: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background: #ccc;
+    position: absolute;
+}
+
+img {
+    width: 220px;
+    border-radius: 15px;
+    margin: 15px 0;
+}
+
+.yesRain {
+    position: absolute;
+    font-size: 28px;
+    color: #ff4d6d;
+    animation: fall 3s linear infinite;
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform:scale(0.95);}
+    to {opacity:1; transform:scale(1);}
+}
+
+@keyframes fall {
+    0% {transform: translateY(-100vh);}
+    100% {transform: translateY(100vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="box" id="mainBox">
+    <h1>Happy Birthday ❤️🎂</h1>
+    <img src="pic1.jpg">
+    <p>Before gifts… before cake… I made something for you.</p>
+    <button class="primary" onclick="startStory()">Open It 💌</button>
+</div>
+
+<script>
+
+function startStory() {
+    document.getElementById("mainBox").innerHTML = `
+        <h2>Some birthdays are special…</h2>
+        <img src="pic2.jpg">
+        <p>
+        But yours is my favorite.  
+        Because the world got you…  
+        and somehow, I got lucky enough to have you.
+        </p>
+        <button class="primary" onclick="nextPart()">Continue ❤️</button>
+    `;
+}
+
+function nextPart() {
+    document.getElementById("mainBox").innerHTML = `
+        <h2>Somewhere between our talks…</h2>
+        <img src="pic4.png">
+        <p>
+        Between your smile…  
+        your anger…  
+        your strength…  
+        and your soft heart…  
+        you became my safe place.
+        </p>
+        <button class="primary" onclick="finalQuestion()">One Last Thing 💖</button>
+    `;
+}
+
+function finalQuestion() {
+    document.body.innerHTML = `
+        <div class="box" style="position:relative;">
+            <img src="pic3.jpg">
+            <h2 style="margin-top:10px;">On your birthday… 💫</h2>
+            <h1>Will you be mine… forever? 💍❤️</h1>
+            <button class="primary" onclick="celebrate()">YES 💖</button>
+            <button id="noBtn">No</button>
+        </div>
+    `;
+
+    const noBtn = document.getElementById("noBtn");
+    moveNoButton();
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
+}
+
+function moveNoButton() {
+    const noBtn = document.getElementById("noBtn");
+    const maxX = window.innerWidth - 100;
+    const maxY = window.innerHeight - 50;
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+}
+
+function celebrate() {
+    document.body.innerHTML = `
+        <div style="text-align:center;padding:40px;">
+            <h1 style="color:#d6336c;">You just made my forever begin 😭❤️</h1>
+            <img src="pic5.jpg">
+            <h2>Best Birthday Decision Ever 💫</h2>
+        </div>
+    `;
+
+    setInterval(() => {
+        const yes = document.createElement("div");
+        yes.classList.add("yesRain");
+        yes.innerHTML = "YES 💖";
+        yes.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(yes);
+        setTimeout(() => yes.remove(), 3000);
+    }, 150);
+}
+
+</script>
+
+</body>
+</html>
