@@ -6,9 +6,7 @@
 <title>For My Forever ❤️</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -18,33 +16,41 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
     padding: 15px;
+    text-align: center;
 }
 
 .box {
     background: white;
-    padding: 20px;
-    border-radius: 20px;
     width: 100%;
     max-width: 400px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
     position: relative;
-    animation: fadeIn 0.8s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-h1 {
-    font-size: 22px;
+.fade-out {
+    opacity: 0;
+    transform: scale(0.96);
 }
 
-h2 {
-    font-size: 18px;
-}
+h1 { font-size: 22px; color: #d6336c; line-height:1.4; }
+h2 { font-size: 18px; color: #d6336c; }
 
 p {
     font-size: 14px;
     color: #444;
-    line-height: 1.5;
+    line-height: 1.6;
+}
+
+img {
+    width: 100%;
+    max-width: 250px;
+    border-radius: 15px;
+    margin: 15px auto;
+    display: block;
 }
 
 button {
@@ -52,8 +58,8 @@ button {
     border-radius: 30px;
     border: none;
     margin: 8px;
-    cursor: pointer;
     font-size: 16px;
+    cursor: pointer;
     transition: 0.3s;
 }
 
@@ -67,32 +73,31 @@ button {
     color: white;
 }
 
-img {
-    width: 100%;
-    max-width: 250px;
-    border-radius: 15px;
-    margin: 15px auto;
-    display: block;
+.yesRain {
+    position: fixed;
+    top: -20px;
+    font-size: 22px;
+    color: #ff4d6d;
+    animation: fall 3s linear infinite;
 }
 
-@keyframes fadeIn {
-    from {opacity:0; transform:scale(0.95);}
-    to {opacity:1; transform:scale(1);}
+@keyframes fall {
+    0% {transform: translateY(-10vh);}
+    100% {transform: translateY(110vh);}
 }
 
-/* Extra small phones */
-@media (max-width: 380px) {
+@media (max-width:380px) {
     h1 { font-size: 20px; }
     h2 { font-size: 16px; }
-    button { font-size: 14px; padding: 10px 18px; }
+    button { font-size: 14px; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="box fade" id="mainBox">
-    <h1>Happy Birthday My Love❤️🎂</h1>
+<div class="box" id="mainBox">
+    <h1>Happy Birthday ❤️🎂</h1>
     <img src="pic1.jpg">
     <p>Before gifts… before cake… I made something only for you.</p>
     <button class="primary" onclick="startStory()">Open It 💌</button>
@@ -102,10 +107,11 @@ img {
 
 function smoothChange(content) {
     const box = document.getElementById("mainBox");
-    box.classList.remove("fade");
+    box.classList.add("fade-out");
+
     setTimeout(() => {
         box.innerHTML = content;
-        box.classList.add("fade");
+        box.classList.remove("fade-out");
     }, 300);
 }
 
@@ -125,11 +131,9 @@ function startStory() {
 function nextPart() {
     smoothChange(`
         <h2>Somewhere between our talks…</h2>
-        <img src="pic4.png">
+        <img src="pic3.jpg">
         <p>
-        Between your smile…  
-        your strength…  
-        and your soft heart…  
+        Between your smile, your strength, your soft heart…  
         you became my peace, my comfort, my home.
         </p>
         <button class="primary" onclick="finalQuestion()">One Last Thing 💖</button>
@@ -140,10 +144,10 @@ let noClickCount = 0;
 
 function finalQuestion() {
     smoothChange(`
-        <img src="pic3.jpg">
+        <img src="pic4.jpg">
         <h2>On your birthday… 💫</h2>
         <h1>Will you be mine… forever? 💍❤️</h1>
-        <div>
+        <div id="btnArea">
             <button class="primary" onclick="celebrate()">YES 💖</button>
             <button id="noBtn" onclick="handleNo()">NO</button>
         </div>
@@ -153,40 +157,76 @@ function finalQuestion() {
 function handleNo() {
     noClickCount++;
     const noBtn = document.getElementById("noBtn");
+    const box = document.querySelector(".box");
 
     if (noClickCount >= 2) {
+        const boxRect = box.getBoundingClientRect();
+        const btnWidth = noBtn.offsetWidth;
+        const btnHeight = noBtn.offsetHeight;
+
+        const maxX = boxRect.width - btnWidth - 20;
+        const maxY = boxRect.height - btnHeight - 20;
+
         noBtn.style.position = "absolute";
-        noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-        noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
-    
+        noBtn.style.left = Math.random() * maxX + "px";
+        noBtn.style.top = Math.random() * maxY + "px";
+    }
 }
 
 function celebrate() {
+
     document.body.innerHTML = `
-        <div class="fade" style="text-align:center;padding:40px;">
-            <h1 style="color:#d6336c;">
-            Today you didn’t just say YES…  
-            you chose me.  
-            You chose us.  
-            And I promise, every birthday from now on,  
-            I’ll make you feel this loved… and more. ❤️
-            </h1>
-            <img src="pic5.jpg">
-            <h2 style="margin-top:20px;">
-            This isn’t just the best birthday decision… 
-            It’s the beginning of our forever. 💍✨
-            </h2>
+        <div style="
+            width:100%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            min-height:100vh;
+            padding:15px;
+            text-align:center;
+            background: linear-gradient(135deg, #ffe3ec, #fff5f8);
+        ">
+            <div style="
+                background:white;
+                width:100%;
+                max-width:400px;
+                padding:25px;
+                border-radius:20px;
+                box-shadow:0 15px 40px rgba(0,0,0,0.15);
+                animation: fadeIn 0.6s ease;
+            ">
+                <h1 style="color:#d6336c; font-size:20px; line-height:1.5;">
+                Today you didn’t just say YES…  
+                you chose me.  
+                You chose us.  
+                And I promise, every birthday from now on,  
+                I’ll make you feel this loved… and even more. ❤️
+                </h1>
+
+                <img src="pic5.jpg" style="
+                    width:100%;
+                    max-width:250px;
+                    border-radius:15px;
+                    margin:15px auto;
+                    display:block;
+                ">
+
+                <h2 style="color:#d6336c; font-size:16px; line-height:1.5;">
+                This isn’t just the best birthday decision…  
+                it’s the beginning of our forever. 💍✨
+                </h2>
+            </div>
         </div>
     `;
 
     setInterval(() => {
-        const yes = document.createElement("div");
-        yes.classList.add("yesRain");
-        yes.innerHTML = "YES 💖";
-        yes.style.left = Math.random() * 100 + "vw";
-        document.body.appendChild(yes);
-        setTimeout(() => yes.remove(), 3000);
-    }, 150);
+        const heart = document.createElement("div");
+        heart.classList.add("yesRain");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+    }, 200);
 }
 
 </script>
